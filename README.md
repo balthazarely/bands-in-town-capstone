@@ -1,7 +1,7 @@
 TO DO
 
 need to create backend that users can save their shows at.
-
+need to create a filter function for events
 
 
 

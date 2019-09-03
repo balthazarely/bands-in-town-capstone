@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import ConcertContainer from '../ConcertContainer';
 import SimilarArtistsContainer from '../SimilarArtistsContainer';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Image, Segment } from 'semantic-ui-react'
+import { Grid, Image, Segment, Card } from 'semantic-ui-react'
 import LogoHeader from '../Header';
 import TopSongs from '../TopSongs';
 import ArtistContainer from '../ArtistContainer';
@@ -44,7 +44,8 @@ class MainContainer extends Component {
 
     // function that allows the search function to work when enter is pressed
     handleSubmit = (e) => {
-        e.preventDefault();
+        if(e) {
+            e.preventDefault();}
         this.setState({
           ready: false,
           simularAtist: this.state.searchTerm
@@ -52,22 +53,32 @@ class MainContainer extends Component {
         this.componentDidMount();
     }
 
+
     clickedSimilarArtist = (e) => {
         e.preventDefault();
         this.setState({
-            searchTerm: e.target.value
-        })
-        console.log("you clicked ", [e.target.value])
-        console.log(this.state.similarArtistsData, " <-- similar artist DATA")
+            searchTerm: e.target.innerHTML,
+            ready: false,
+            simularAtist: this.state.searchTerm
+        },function(){
+            console.log(this.state)
+             this.handleSubmit();
+        }) 
+        console.log("you clicked ", [e.target.innerHTML])
+        // console.log("new STATE", this.state.searchTerm)
+       
     }
 
     addShowToList = (e) => {
-        console.log("you clicked button", [e.target.name])
+        console.log([e.currentTarget.value])
     }
+
+    // when you click the a tag of similar artitsts, then page doesnt really load fully
 
 
     // Get the API data
     componentDidMount = async () => {
+        console.log("new STATE", this.state)
         //this is the artist data from the API
         const response = await fetch(`https://rest.bandsintown.com/artists/${this.state.searchTerm}?app_id=3668f547a226ff2fa06663c1ed8d39cc`);
         const json = await response.json();
@@ -105,14 +116,10 @@ class MainContainer extends Component {
         });
        
     }
-
-    
   
 
     render() {
-        
          return (
-             
              <div>
                 <LogoHeader />
                 <Grid stackable columns={3}>
@@ -121,13 +128,16 @@ class MainContainer extends Component {
                             <Image src={this.state.artistData.image_url}/>
                             <h2>{this.state.artistData.name}</h2>
                         </Segment>
+                    
                         {/* <Segment>
                             {this.state.loading ? "Artists Loading..." : <ArtistContainer data={this.state.fethchedArtistId} />}
                         </Segment> */}
                         <Segment>
                             {this.state.loading ? "Simular Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
                         </Segment>
+
                         <Segment>
+
                             {this.state.loading ? "Simular Photo Loading..." : <TopSongs topSongs={this.state.topSongs} />}
                         </Segment>
                     </Grid.Column>
@@ -156,6 +166,9 @@ class MainContainer extends Component {
                         </Segment>
                     </Grid.Column>
                 </Grid>
+
+
+                
   
                 </div>
          

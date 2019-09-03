@@ -6,7 +6,7 @@ class User extends Component {
         this.state = {
             name: "Name",
             location: "Denver",
-            favoriteBand: "Wilco"
+            savedEvents: []
 
         } 
     }
@@ -14,15 +14,15 @@ class User extends Component {
 render(){
     return(
         <div>
-            <h3> User  Details</h3>
+            <h3>User  Details</h3>
             <p>Name: {this.state.name}</p>
             <p>location: {this.state.location}</p>
-            <p>Favoirte Band: {this.state.favoriteBand}</p>
+            <p>Upcoming Events: {this.state.savedEvents}</p>
         </div>
     )
 }
 }
 
-
+//should make this a fucntion component, and move the state of this into the parent container. 
 
 export default User;

@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
+import { Grid, Card } from 'semantic-ui-react'
 
 
 const SimilarArtistsContainer = (props) => {
     // console.log(props.similarArtists, "< SimularArtists inside similarArtistsContainer")
     // console.log(props.similarArtists[0].similarartists.artist[0])
     // const artist = props.similarArtists[0].similarartists.artist[0].name
-    const artist = props.similarArtists[0].similarartists.artist.slice(0, 10).map((artist, i) => {
+    const artist = props.similarArtists[0].similarartists.artist.slice(0, 4).map((artist, i) => {
         // console.log(props.similarArtists[0].similarartists.artist)
-        // console.log(props.similarArtists[0].similarartists.url, " <-- photo in container")
-
 
         return (
             <div>
-               <a onClick={props.clickedSimilarArtist}>{artist.name}</a>
+                <button value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</button>
             </div> 
         )  
     })
@@ -20,10 +19,13 @@ const SimilarArtistsContainer = (props) => {
     return(
         <div>
             <h3> Similar Artists </h3>
-             {artist}
+            {artist}       
         </div>
     )
 }
+
+
+
 
 
 
