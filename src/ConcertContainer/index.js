@@ -1,49 +1,43 @@
 import React, { Component } from 'react';
-
+import { Grid, Image, Button, Icon } from 'semantic-ui-react'
 
 
 
 
 const ConcertContainer = (props) => {
-    console.log(props.concert, "< concertList inside ConcertContainer")
-     const concertList = props.concert.map((singleConcert, i) => {
+    const concertList = props.concert.map((singleConcert, i) => {
+    // console.log(props.concert, " < concert info in ConcertContainer") 
 
         return (
-            <div>
-                <h5>{singleConcert.venue.name}</h5>
-                <p>{singleConcert.datetime}</p>
-                <h6>{singleConcert.venue.city}, {singleConcert.venue.country}</h6>
-            </div> 
+            <Grid.Row columns={2}>
+                <Grid.Column>
+                    {/* <Image src='/images/wireframe/paragraph.png' /> */}
+                    <h3>{singleConcert.lineup[0]}</h3>
+                    <Button icon onClick={props.addShowToList}>
+                        <Icon name='plus' />
+                    </Button>
+                </Grid.Column>
+                <Grid.Column>
+                    {/* <Image src='/images/wireframe/paragraph.png' /> */}
+                    <p>{singleConcert.datetime}</p>
+                    <h4>{singleConcert.venue.name}</h4>
+                    <h5>{singleConcert.venue.city}, {singleConcert.venue.country}</h5>
+                   
+                </Grid.Column>
+                </Grid.Row>
+    
         )   
-        
     })
 
-
-
-   
-   
-
-
-
     return(
-
-        <div>
-           
-            {concertList}
-            
-        </div>
+                <Grid divided='vertically'>
+                   
+                        {concertList}
+                   
+                </Grid>
     )
 }
 
 
 
 export default ConcertContainer;
-
-//    // const concertInfo = props.concert
-//     // console.log(concertInfo, " < concert info in ConcertContainer") 
-//     const concertInfo = props.concert.map(singleConcert, i) => {
-//         return (
-//             {beer.id}
-//         )
-//     }
-//     console.log(concertInfo.length, "< ConcertInfo length")
