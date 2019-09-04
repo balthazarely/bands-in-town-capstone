@@ -4,23 +4,18 @@ import { Button } from 'semantic-ui-react'
 
 const User = (props) => {
     const artistList = props.favArtists.map((fav, i) => {
+        // console.log(props.favArtists, " <-- adding artist to the favoriteList")
     return(
-        <div>
-            <Button compact onClick={props.clickArtistOnList}>{fav}</Button>
+        <div key={i}>
+            <Button onClick={props.clickArtistOnList}>{fav}</Button>
             <Button.Group basic size='small'>
-                <Button onClick={props.removeArtistFromList} icon='delete' />
+                <Button onClick={props.removeArtistFromList.bind(null, fav)} icon='delete' />
             </Button.Group>
         </div> 
         )
     })
 
-    // const event = props.savedEvents.artistId.map((id, i) => {
-    //     return(
-    //         <div>
-    //             <p>id</p>
-    //         </div>
-    //     )
-    // })
+
     
 
 

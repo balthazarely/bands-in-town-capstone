@@ -11,9 +11,8 @@ const SimilarArtistsContainer = (props) => {
         // console.log(props.similarArtists[0].similarartists.artist)
 
         return (
-            <div>
-                <Button compact  value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
-              
+            <div key={i}>
+                <Button value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
             </div> 
         )  
     })

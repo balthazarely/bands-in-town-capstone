@@ -11,3 +11,10 @@
   margin: 20px;
 }
 
+body {
+  background: black;
+}
+
+.main-icon {
+  color: white;
+}

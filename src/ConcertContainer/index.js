@@ -9,7 +9,7 @@ const ConcertContainer = (props) => {
     // console.log(props.concert, " < concert info in ConcertContainer") 
 
         return (
-            <Grid.Row columns={2}>
+            <Grid.Row key={i} columns={2}>
                 <Grid.Column>
                     {/* <Image src='/images/wireframe/paragraph.png' /> */}
                     <h3>{singleConcert.lineup[0]}</h3>
@@ -17,28 +17,21 @@ const ConcertContainer = (props) => {
                         <Icon name='plus'/>
                     </Button> 
 
-
-
-                    
                 </Grid.Column>
                 <Grid.Column>
                     {/* <Image src='/images/wireframe/paragraph.png' /> */}
                     <p>{singleConcert.datetime}</p>
                     <h4>{singleConcert.venue.name}</h4>
                     <h5>{singleConcert.venue.city}, {singleConcert.venue.country}</h5>
-                   
                 </Grid.Column>
                 </Grid.Row>
-    
         )   
     })
 
     return(
-                <Grid divided='vertically'>
-                   
-                        {concertList}
-                   
-                </Grid>
+        <Grid divided='vertically'>
+            {concertList}
+        </Grid>
     )
 }
 

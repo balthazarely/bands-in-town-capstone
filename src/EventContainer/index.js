@@ -9,16 +9,14 @@ const EventContainer = (props) => {
         const events = props.event[0].resultsPage.results.event.map((event, i) => {
 
         return (
-            <div>
-                <h4>{event.displayName}</h4>
-              
+            <div key={i}>
+                <h4>{event.displayName}</h4> 
             </div> 
         )   
     })
 
     return(
         <div>
-            
           {events}
         </div>
     )

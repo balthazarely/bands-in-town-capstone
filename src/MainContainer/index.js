@@ -95,19 +95,24 @@ class MainContainer extends Component {
         this.setState({
             favArtists: [... this.state.favArtists, e.currentTarget.value]
         },function(){
-            // console.log(this.state)
             //  this.handleSubmit();
         }) 
         // console.log("you clicked ", [e.target.value])
         // console.log(this.state.favArtists)
     }
 
-    removeArtistFromList = (e) => {
-        // e.preventDefault();
-        // this.setState({
-            
-        // })
-        console.log("delete me")
+    removeArtistFromList = (fav) => {
+        this.setState({
+            favArtists: this.state.favArtists.filter((artist) => artist !== fav)
+        })
+        console.log("delete ", fav)
+    }
+
+    removeShowFromList = (event) => {
+        this.setState({
+            savedEvents: this.state.savedEvents.filter((events) => events !== event)
+        })
+        console.log("delete ", event)
     }
 
     clickArtistOnList = (e) => {
@@ -199,7 +204,7 @@ class MainContainer extends Component {
                     <Grid.Column width={8}>
                         <Segment>
                             <div className="search-form">
-                                <form inline onSubmit={this.handleSubmit}>
+                                <form onSubmit={this.handleSubmit}>
                                     <Input type="text" 
                                         name="searchTerm" 
                                         id="IDK" focus
@@ -212,14 +217,14 @@ class MainContainer extends Component {
                                 </form>
                             </div>
                         </Segment>
-                        <Segment>
-                        <Form>
+                        {/* <Segment>
+                            <Form>
                                 <Form.Field>
                                     <input type="text" name="filterCity" placeholder='filter' value={this.state.filterCity} onChange={this.filterSearchResults}/>
                                     <button>Submit</button>
                                 </Form.Field>
                             </Form>
-                        </Segment>
+                        </Segment> */}
                         <Segment>
                             {this.state.loading ? "Loading...." : 
                             <ConcertContainer concert={this.state.concertData} addShowToList={this.addShowToList}/>}
@@ -227,11 +232,15 @@ class MainContainer extends Component {
                     </Grid.Column>
                     <Grid.Column width={4}>
                         <Segment>
-                            <User removeArtistFromList={this.removeArtistFromList} clickArtistOnList={this.clickArtistOnList} name={this.state.name} favArtists={this.state.favArtists} location={this.state.location}/>
+                            <User removeArtistFromList={this.removeArtistFromList}
+                            clickArtistOnList={this.clickArtistOnList} 
+                            name={this.state.name} 
+                            favArtists={this.state.favArtists}
+                            location={this.state.location}/>
                         </Segment>
                         <Segment>
                             {this.state.savedEventsReady === false ? "Loading...." : 
-                            <SavedEvents savedEvents={this.state.savedEvents}/>}
+                            <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />}
                         </Segment>
                         <Segment>
                             <h2> Events Nearby</h2>
