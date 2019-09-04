@@ -1,28 +1,41 @@
 import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react'
 
-class User extends Component {
-    constructor() {
-        super()
-        this.state = {
-            name: "Name",
-            location: "Denver",
-            savedEvents: []
 
-        } 
-    }
-
-render(){
+const User = (props) => {
+    const artistList = props.favArtists.map((fav, i) => {
     return(
         <div>
-            <h3>User  Details</h3>
-            <p>Name: {this.state.name}</p>
-            <p>location: {this.state.location}</p>
-            <p>Upcoming Events: {this.state.savedEvents}</p>
+            <Button compact onClick={props.clickArtistOnList}>{fav}</Button>
+            <Button.Group basic size='small'>
+                <Button onClick={props.removeArtistFromList} icon='delete' />
+            </Button.Group>
+        </div> 
+        )
+    })
+
+    // const event = props.savedEvents.artistId.map((id, i) => {
+    //     return(
+    //         <div>
+    //             <p>id</p>
+    //         </div>
+    //     )
+    // })
+    
+
+
+    return(
+        <div> 
+          <p>Username: {props.name}</p>
+          <p>Location: {props.location}</p>
+       
+          <p>Favorite Artists:</p>
+          {artistList}
+      
         </div>
     )
 }
-}
 
-//should make this a fucntion component, and move the state of this into the parent container. 
+
 
 export default User;

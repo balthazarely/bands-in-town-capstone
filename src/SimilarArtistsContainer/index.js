@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { Grid, Card } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+
 
 
 const SimilarArtistsContainer = (props) => {
     // console.log(props.similarArtists, "< SimularArtists inside similarArtistsContainer")
     // console.log(props.similarArtists[0].similarartists.artist[0])
     // const artist = props.similarArtists[0].similarartists.artist[0].name
-    const artist = props.similarArtists[0].similarartists.artist.slice(0, 4).map((artist, i) => {
+    const artist = props.similarArtists[0].similarartists.artist.slice(0, 8).map((artist, i) => {
         // console.log(props.similarArtists[0].similarartists.artist)
 
         return (
             <div>
-                <button value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</button>
+                <Button compact  value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
+              
             </div> 
         )  
     })

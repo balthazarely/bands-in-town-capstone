@@ -13,9 +13,13 @@ const ConcertContainer = (props) => {
                 <Grid.Column>
                     {/* <Image src='/images/wireframe/paragraph.png' /> */}
                     <h3>{singleConcert.lineup[0]}</h3>
-                    <Button icon value={singleConcert.id} onClick={props.addShowToList}>
+                    <Button icon name={singleConcert.datetime} value={singleConcert} onClick={props.addShowToList.bind(this, singleConcert)}>
                         <Icon name='plus'/>
-                    </Button>
+                    </Button> 
+
+
+
+                    
                 </Grid.Column>
                 <Grid.Column>
                     {/* <Image src='/images/wireframe/paragraph.png' /> */}
