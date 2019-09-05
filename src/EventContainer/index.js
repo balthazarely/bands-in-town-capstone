@@ -10,14 +10,15 @@ const EventContainer = (props) => {
 
         return (
             <div key={i}>
-                <h4>{event.displayName}</h4> 
+                <h5>{event.displayName}</h5> 
             </div> 
         )   
     })
 
     return(
         <div>
-          {events}
+            <h3> Events Nearby</h3>
+            {events}
         </div>
     )
 }

@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import React from 'react';
+import { Button, List } from 'semantic-ui-react'
+
 
 
 const SavedEvents = (props) => {
 
     // console.log(props.savedEvents[0].id)
-    // console.log(props.savedEvents[0])
-    // const eventlist = props.savedEvents[0].map((event, i) => {
+    console.log(props.savedEvents[0])
     const eventlist = props.savedEvents.map((event, i) => {
         return(
             <div key={i}>
-                <h4>{event.lineup[0]} {event.datetime} {event.venue.city}</h4>
+                <h4>{event.lineup[0]}</h4>
+                <p>{event.datetime}</p>
+                <p>{event.venue.city}, {event.venue.country}</p>
                 <Button.Group basic size='small'>
                     <Button onClick={props.removeShowFromList.bind(null, event)}icon='delete'/>
                 </Button.Group>
@@ -21,17 +23,19 @@ const SavedEvents = (props) => {
         )
     })
 
+    
+
+
 
 
 
     return(
-        <div> 
-             <p>Saved Events:</p>
+        <div>
+             <h3>Saved Events:</h3>
              {eventlist}
         </div>
     )
 }
-
 
 
 export default SavedEvents;

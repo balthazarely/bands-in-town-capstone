@@ -16,17 +16,14 @@ const User = (props) => {
     })
 
 
-    
-
-
     return(
         <div> 
-          <p>Username: {props.name}</p>
-          <p>Location: {props.location}</p>
-       
-          <p>Favorite Artists:</p>
-          {artistList}
+          <p className="white">Username: {props.name}</p>
+          <p className="white">Location: {props.location}</p>
       
+        
+          <p className="white">Favorite Artists:</p>
+          {artistList}
         </div>
     )
 }

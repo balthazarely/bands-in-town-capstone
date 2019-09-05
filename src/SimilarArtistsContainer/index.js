@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import { Button, Divider } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
+
+
 
 
 
@@ -11,16 +14,18 @@ const SimilarArtistsContainer = (props) => {
         // console.log(props.similarArtists[0].similarartists.artist)
 
         return (
-            <div key={i}>
-                <Button value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
-            </div> 
+            
+                <Button basic inverted color="purple" className="ui color1 button" value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
+          
         )  
     })
     
     return(
         <div>
-            <h3> Similar Artists </h3>
-            {artist}       
+            
+            <Divider className="white" inverted horizontal><h3> sounds like </h3></Divider>
+            {artist}      
+           
         </div>
     )
 }

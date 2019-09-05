@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button, Divider } from 'semantic-ui-react'
+
 
 
 // const similarPhotos = (props) => {
@@ -27,8 +29,8 @@ const TopSongs = (props) => {
     
 
         return (
-            <div key={i}>
-             <li>{song.name}</li>
+            <div className="push-left" key={i}>
+             <li className="white">{song.name}</li>
             </div> 
         )  
     })
@@ -37,7 +39,7 @@ const TopSongs = (props) => {
     
         return(
             <div>
-                <h3> Most Popular Songs </h3>
+                 <Divider className="white" inverted horizontal><h3> Top Songs </h3></Divider>
                 <ol>{songs}</ol>
             </div>
         )

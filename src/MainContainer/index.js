@@ -8,8 +8,8 @@ import TopSongs from '../TopSongs';
 import ArtistContainer from '../ArtistContainer';
 import EventContainer from '../EventContainer';
 import User from '../User';
-import SavedEvents from '../SavedEvents'
-
+import SavedEvents from '../SavedEvents';
+import BackgroundImagePage from '../BackgroundImagePage';
 
 
 class MainContainer extends Component {
@@ -26,11 +26,12 @@ class MainContainer extends Component {
             similarArtistsData: [],
             locationID: '6404',
             locationData: [],
+            savedEvents: [],
+            favArtists: [],
             //this is the user state stuff
             name: "joe shmmo",
             location: "Denver",
-            savedEvents: [],
-            favArtists: [],
+            modalOpen: false,
             //utility
             filterCity: '',
             loading: true,
@@ -41,7 +42,6 @@ class MainContainer extends Component {
         this.componentDidMount = this.componentDidMount.bind(this)
     }
     
-
      // this changes the state of the search 
      handleTermChange = (e) => {
         this.setState({[e.target.name] : e.target.value});
@@ -69,14 +69,9 @@ class MainContainer extends Component {
             // console.log(this.state)
              this.handleSubmit();
         }) 
-        // console.log("you clicked ", [e.target.innerHTML])
-        // console.log("new STATE", this.state.searchTerm)
     }
 
     addShowToList = (singleConcert, e) => {
-        // console.log(e.currentTarget.value)
-        // console.log([e.currentTarget.name])
-        
         // e.preventDefault();
         const recentAdd = singleConcert;
         // console.log(recentAdd)
@@ -90,6 +85,7 @@ class MainContainer extends Component {
             // console.log(this.state.savedEvents)
         })
     }
+    
 
     addArtistToList = (e) => {
         this.setState({
@@ -128,21 +124,28 @@ class MainContainer extends Component {
         }) 
     }
 
-    filterSearchResults = (e) => {
+    // filterSearchResults = (e) => {
+    //     this.setState({
+    //         filterCity: e.target.value
+    //     });
+    //     console.log("filter form has been hit")
+    //     console.log(this.state.filterCity)
+    // }
+
+    openUserInfomation = () => {
+        console.log("Edit button was clicked ")
         this.setState({
-            filterCity: e.target.value
-        });
-        console.log("filter form has been hit")
-        console.log(this.state.filterCity)
+            modalOpen: true
+        })
     }
+
 
     // Get the API data
     componentDidMount = async () => {
-        // console.log("new STATE", this.state)
+       
         //this is the artist data from the API
         const response = await fetch(`https://rest.bandsintown.com/artists/${this.state.searchTerm}?app_id=3668f547a226ff2fa06663c1ed8d39cc`);
         const json = await response.json();
-        //this is the event data from the api
 
         //BANDSINTOWN VERSION
         const response2 = await fetch(`https://rest.bandsintown.com/artists/${this.state.searchTerm}/events?app_id=3668f547a226ff2fa06663c1ed8d39cc&date=upcoming`);
@@ -156,15 +159,10 @@ class MainContainer extends Component {
         //fetch artist ID
         const response5 = await fetch(`https://api.songkick.com/api/3.0/search/artists.json?apikey=viaZLZfjblo2eWh5&query=${this.state.searchTerm}`);
         const json5 = await response5.json();
-        // console.log(json5.resultsPage.results.artist[0].id, " ARTIST ID");
-
-        // need to have a second fetch that will add the id from this into another fetch to serach by artist ID
 
         //fetch based on area
         const response6 = await fetch(`https://api.songkick.com/api/3.0/metro_areas/${this.state.locationID}/calendar.json?apikey=viaZLZfjblo2eWh5`);
         const json6 = await response6.json();
-
-        // console.log(json6, " < events in location");
 
         this.setState({
             artistData: json,
@@ -176,33 +174,38 @@ class MainContainer extends Component {
             loading: false
         });
     }
+
+    //turn off/on the opacity classes based on searches
+    // opacityChanger = () => {
+
+    // }
+    
   
 
     render() {
          return (
-             <div>
+             <div class="bg">
+                 <div class="content-holder">
                 <LogoHeader />
+                
                 <Grid stackable columns={3}>
                     <Grid.Column width={4}>
-                        <Segment>
+                        <div className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
                             <Image src={this.state.artistData.image_url}/>
-                            <h2>{this.state.artistData.name}</h2>
+                            <h1 className="artist-name-display">{this.state.artistData.name}</h1>
                             <Button icon value={this.state.artistData.name} onClick={this.addArtistToList}>
                                 <Icon name='plus'/>
                             </Button>
-                        </Segment>
-                        {/* <Segment>
-                            {this.state.loading ? "Artists Loading..." : <ArtistContainer data={this.state.fethchedArtistId} />}
-                        </Segment> */}
-                        <Segment>
-                            {this.state.loading ? "Simular Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
-                        </Segment>
-                        <Segment>
-                            {this.state.loading ? "Simular Photo Loading..." : <TopSongs topSongs={this.state.topSongs} />}
-                        </Segment>
+                        </div>
+                        <div className="gray-card">
+                            {this.state.loading ? "Similar Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
+                        </div>
+                        <div className="gray-card">
+                            {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}
+                        </div>
                     </Grid.Column>
                     <Grid.Column width={8}>
-                        <Segment>
+                        <div>
                             <div className="search-form">
                                 <form onSubmit={this.handleSubmit}>
                                     <Input type="text" 
@@ -216,39 +219,31 @@ class MainContainer extends Component {
                                     </Button>
                                 </form>
                             </div>
-                        </Segment>
-                        {/* <Segment>
-                            <Form>
-                                <Form.Field>
-                                    <input type="text" name="filterCity" placeholder='filter' value={this.state.filterCity} onChange={this.filterSearchResults}/>
-                                    <button>Submit</button>
-                                </Form.Field>
-                            </Form>
-                        </Segment> */}
-                        <Segment>
-                            {this.state.loading ? "Loading...." : 
+                        </div>
+                        <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                            {this.state.loading ? "Artist Concerts Loading...." : 
                             <ConcertContainer concert={this.state.concertData} addShowToList={this.addShowToList}/>}
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={4}>
-                        <Segment>
+                        <div className="gray-card">
                             <User removeArtistFromList={this.removeArtistFromList}
                             clickArtistOnList={this.clickArtistOnList} 
                             name={this.state.name} 
                             favArtists={this.state.favArtists}
                             location={this.state.location}/>
-                        </Segment>
-                        <Segment>
-                            {this.state.savedEventsReady === false ? "Loading...." : 
+                        </div>
+                        <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                            {this.state.savedEventsReady === false ? "Saved Events Loading" : 
                             <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />}
                         </Segment>
-                        <Segment>
-                            <h2> Events Nearby</h2>
-                            {this.state.loading ? "Artists Loading..." : <EventContainer event={this.state.locationData} />}
+                        <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                            {this.state.loading ? "Nearby Events Loading..." : <EventContainer event={this.state.locationData} />}
                         </Segment>
                     </Grid.Column>
                 </Grid>
             </div>
+        </div>
          
         )
     }
