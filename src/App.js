@@ -8,8 +8,10 @@ function App() {
     <div className="App">
                           <div class="ui menu inverted segment">
                             <div class=" right floated ui inverted secondary menu">
-                           
                               
+                               <div>
+                                <img src="./public/Logo.png"/>
+                               </div>
                             </div>
                           </div>
       <MainContainer />

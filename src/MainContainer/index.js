@@ -10,6 +10,7 @@ import EventContainer from '../EventContainer';
 import User from '../User';
 import SavedEvents from '../SavedEvents';
 import BackgroundImagePage from '../BackgroundImagePage';
+import Welcome from '../Welcome';
 
 
 class MainContainer extends Component {
@@ -187,24 +188,9 @@ class MainContainer extends Component {
              <div class="bg">
                  <div class="content-holder">
                 <LogoHeader />
-                
+           
                 <Grid stackable columns={3}>
-                    <Grid.Column width={4}>
-                        <div className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
-                            <Image src={this.state.artistData.image_url}/>
-                            <h1 className="artist-name-display">{this.state.artistData.name}</h1>
-                            <Button icon value={this.state.artistData.name} onClick={this.addArtistToList}>
-                                <Icon name='plus'/>
-                            </Button>
-                        </div>
-                        <div className="gray-card">
-                            {this.state.loading ? "Similar Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
-                        </div>
-                        <div className="gray-card">
-                            {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}
-                        </div>
-                    </Grid.Column>
-                    <Grid.Column width={8}>
+                    <Grid.Column width={16}>
                         <div>
                             <div className="search-form">
                                 <form onSubmit={this.handleSubmit}>
@@ -220,24 +206,45 @@ class MainContainer extends Component {
                                 </form>
                             </div>
                         </div>
+                    </Grid.Column>
+                </Grid>
+                <Grid stackable columns={3}>
+                    <Grid.Column width={4} className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                        <div>
+                            <Image className="artist-image" src={this.state.artistData.image_url}/>
+                            <h1 className="artist-name-display">{this.state.artistData.name}</h1>
+                            <Button className="plus-icon" color="orange" icon value={this.state.artistData.name} onClick={this.addArtistToList}>
+                                <Icon name='plus'/>
+                            </Button>
+                        </div>
+                        <div className="gray-card">
+                            {this.state.loading ? "Similar Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
+                        </div>
+                        <div className="gray-card">
+                            {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}
+                        </div>
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                      
                         <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
                             {this.state.loading ? "Artist Concerts Loading...." : 
                             <ConcertContainer concert={this.state.concertData} addShowToList={this.addShowToList}/>}
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={4}>
-                        <div className="gray-card">
+                    <Grid.Column className={this.state.loading ? 'opacityON' : 'opacityOFF'} width={4}>
+                        <div className="gray-card-nomargintop">
+                            
                             <User removeArtistFromList={this.removeArtistFromList}
                             clickArtistOnList={this.clickArtistOnList} 
                             name={this.state.name} 
                             favArtists={this.state.favArtists}
                             location={this.state.location}/>
                         </div>
-                        <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                        <Segment>
                             {this.state.savedEventsReady === false ? "Saved Events Loading" : 
                             <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />}
                         </Segment>
-                        <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                        <Segment>
                             {this.state.loading ? "Nearby Events Loading..." : <EventContainer event={this.state.locationData} />}
                         </Segment>
                     </Grid.Column>
@@ -250,3 +257,6 @@ class MainContainer extends Component {
 }
 
 export default MainContainer;
+
+
+               

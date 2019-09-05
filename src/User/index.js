@@ -7,9 +7,9 @@ const User = (props) => {
         // console.log(props.favArtists, " <-- adding artist to the favoriteList")
     return(
         <div key={i}>
-            <Button onClick={props.clickArtistOnList}>{fav}</Button>
+            <Button basic color="orange" onClick={props.clickArtistOnList}>{fav}</Button>
             <Button.Group basic size='small'>
-                <Button onClick={props.removeArtistFromList.bind(null, fav)} icon='delete' />
+                <Button  basic color="orange" onClick={props.removeArtistFromList.bind(null, fav)} icon='delete' />
             </Button.Group>
         </div> 
         )
