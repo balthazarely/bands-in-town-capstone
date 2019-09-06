@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Divider } from 'semantic-ui-react'
+import React from 'react';
+import { Divider } from 'semantic-ui-react'
 
 
 

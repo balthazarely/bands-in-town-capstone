@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Divider } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 

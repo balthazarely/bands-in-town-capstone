@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import React from 'react';
+import { Button, Divider} from 'semantic-ui-react'
 
 
 const User = (props) => {
@@ -18,6 +18,8 @@ const User = (props) => {
 
     return(
         <div> 
+            <Divider className="white" inverted horizontal><h3> PROFILE </h3></Divider>
+
           <p className="white">Username: {props.name}</p>
           <p className="white">Location: {props.location}</p>
       

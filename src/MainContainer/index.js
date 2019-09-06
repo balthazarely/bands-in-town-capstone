@@ -2,15 +2,15 @@ import React, { Component} from 'react';
 import ConcertContainer from '../ConcertContainer';
 import SimilarArtistsContainer from '../SimilarArtistsContainer';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Form, Image, Segment, Button, Icon, Input, Card } from 'semantic-ui-react'
+import { Grid, Image, Segment, Button, Icon, Input } from 'semantic-ui-react'
 import LogoHeader from '../Header';
 import TopSongs from '../TopSongs';
-import ArtistContainer from '../ArtistContainer';
 import EventContainer from '../EventContainer';
 import User from '../User';
 import SavedEvents from '../SavedEvents';
-import BackgroundImagePage from '../BackgroundImagePage';
 import Welcome from '../Welcome';
+import LoaderIcon from '../LoaderIcon'
+
 
 
 class MainContainer extends Component {
@@ -32,9 +32,7 @@ class MainContainer extends Component {
             //this is the user state stuff
             name: "joe shmmo",
             location: "Denver",
-            modalOpen: false,
             //utility
-            filterCity: '',
             loading: true,
             savedEventsReady: false,
             ready: false
@@ -85,16 +83,17 @@ class MainContainer extends Component {
             })
             // console.log(this.state.savedEvents)
         })
+        
     }
     
-
+    // this should also be triggering adding the artist to the db.
     addArtistToList = (e) => {
         this.setState({
             favArtists: [... this.state.favArtists, e.currentTarget.value]
         },function(){
             //  this.handleSubmit();
         }) 
-        // console.log("you clicked ", [e.target.value])
+        console.log("you clicked ", [e.target.value])
         // console.log(this.state.favArtists)
     }
 
@@ -125,19 +124,15 @@ class MainContainer extends Component {
         }) 
     }
 
-    // filterSearchResults = (e) => {
-    //     this.setState({
-    //         filterCity: e.target.value
-    //     });
-    //     console.log("filter form has been hit")
-    //     console.log(this.state.filterCity)
-    // }
-
     openUserInfomation = () => {
         console.log("Edit button was clicked ")
         this.setState({
             modalOpen: true
         })
+    }
+
+    getUsername = () => {
+        console.log("this is trying to get the username")
     }
 
 
@@ -188,19 +183,24 @@ class MainContainer extends Component {
              <div class="bg">
                  <div class="content-holder">
                 <LogoHeader />
+
+                
+                
            
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <div>
+
+                     
                             <div className="search-form">
                                 <form onSubmit={this.handleSubmit}>
-                                    <Input type="text" 
+                                    <Input size='small' icon='search' type="text" 
                                         name="searchTerm" 
                                         id="IDK" focus
                                         placeholder="Search Artist..." 
                                         value={this.state.searchTerm} 
                                         onChange={this.handleTermChange}/>
-                                    <Button>
+                                    <Button className="mainButton" color="orange" >
                                         Submit
                                     </Button>
                                 </form>
@@ -208,12 +208,13 @@ class MainContainer extends Component {
                         </div>
                     </Grid.Column>
                 </Grid>
+            
                 <Grid stackable columns={3}>
                     <Grid.Column width={4} className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
                         <div>
                             <Image className="artist-image" src={this.state.artistData.image_url}/>
                             <h1 className="artist-name-display">{this.state.artistData.name}</h1>
-                            <Button className="plus-icon" color="orange" icon value={this.state.artistData.name} onClick={this.addArtistToList}>
+                            <Button inverted className="plus-icon" color="orange" icon value={this.state.artistData.name} onClick={this.addArtistToList}>
                                 <Icon name='plus'/>
                             </Button>
                         </div>
@@ -226,8 +227,8 @@ class MainContainer extends Component {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       
-                        <Segment className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
-                            {this.state.loading ? "Artist Concerts Loading...." : 
+                        <Segment>
+                            {this.state.loading ? <Welcome /> : 
                             <ConcertContainer concert={this.state.concertData} addShowToList={this.addShowToList}/>}
                         </Segment>
                     </Grid.Column>
@@ -240,13 +241,14 @@ class MainContainer extends Component {
                             favArtists={this.state.favArtists}
                             location={this.state.location}/>
                         </div>
-                        <Segment>
-                            {this.state.savedEventsReady === false ? "Saved Events Loading" : 
-                            <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />}
-                        </Segment>
-                        <Segment>
+                        
+                            {this.state.savedEvents.length == 0 ? null : <Segment>
+                            <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />  </Segment>}
+                     
+                        <div className="gray-card">
+                            
                             {this.state.loading ? "Nearby Events Loading..." : <EventContainer event={this.state.locationData} />}
-                        </Segment>
+                        </div>
                     </Grid.Column>
                 </Grid>
             </div>

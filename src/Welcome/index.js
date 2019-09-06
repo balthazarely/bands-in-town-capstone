@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Divider } from 'semantic-ui-react'
+import React from 'react';
+
 
 
 
@@ -7,11 +7,10 @@ const Welcome = () => {
    
     
         return(
-            <div className="welcometext">
-                 <h4>Welcome to <b>ShowScout!</b> <br/>
-                     To start, just search the name of your favorite band!</h4>
-                 
-            
+            <div>
+                 <h4 className="welcome-text"><b>Welcome to ShowScout!</b> </h4>
+                     <h5 className="sub-welcome-text">To start, just search the name of your favorite band!</h5>
+                   
             </div>
         )
 }

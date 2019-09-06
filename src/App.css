@@ -50,7 +50,11 @@ body {
   margin-bottom: 40px; 
 }
 
-h4 {
+.add-concert-button {
+  margin: 500px;
+}
+
+.venue {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 500;
   font-size: 26px;
@@ -59,6 +63,69 @@ h4 {
   background: linear-gradient(55deg, rgba(237,152,57,1) 20%, rgba(223,106,179,1) 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+b {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  margin-bottom: 40px;
+  background: rgb(237,152,57);
+  background: linear-gradient(55deg, rgba(237,152,57,1) 20%, rgba(223,106,179,1) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.welcome-text {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 26px;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.sub-welcome-text {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+  margin-top: -30px;
+}
+
+.logout-btn {
+  bottom: 100px;
+}
+
+h5 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  background: rgb(237,152,57);
+  background: linear-gradient(55deg, rgba(237,152,57,1) 20%, rgba(223,106,179,1) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lineup {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 1000;
+  font-size: 24px;
+  background: rgb(237,152,57);
+  background: linear-gradient(55deg, rgba(237,152,57,1) 20%, rgba(223,106,179,1) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lineup2 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: black;
+}
+
+
+.reg-login-btn {
+  margin: 5px;
 }
 
 .artist-name-display {
@@ -73,6 +140,7 @@ h3 {
   text-transform: uppercase;
   font-weight: 1000;
 }
+
 
 .lg-gray-card {
   background: black;
@@ -125,22 +193,34 @@ h3 {
   box-shadow: 0px 0px 49px -8px rgba(0,0,0,0.96);
 }
 
-.but-pad {
-  margin: 50px;
-}
-/* 
-.ui.color1.button {
-  background: rgb(192,72,72);
-  background: linear-gradient(90deg, rgba(192,72,72,1) 0%, rgba(72,0,72,1) 100%);
-} */
-
-
 .push-left {
   margin-left: 0;
   margin-right: auto;
   display: table;
 }
 
+.push-right {
+  margin-right: 0;
+  margin-left: auto;
+  display: table;
+  
+}
+
 ul {
   text-align: left;
 }
+
+.login-box {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.verticle-center {
+  margin: 0;
+  position: absolute;
+  top: 30%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+
