@@ -11,7 +11,7 @@ import Logout from './Logout';
 function App() {
   return (
     <div className="App">
-                      <Logout />
+       <Logout />
 
       
       <main>

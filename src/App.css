@@ -105,6 +105,12 @@ h5 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.event-header{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+ color: black;
+}
 
 .lineup {
   font-family: 'Source Sans Pro', sans-serif;

@@ -48,18 +48,18 @@ class Register extends Component {
 	<LogoHeader />
 
 	<div className="login-box">
-		<form onSubmit={this.handleSubmit} class="ui form">
+		<form onSubmit={this.handleSubmit} className="ui form">
 		
-				<div class="white field">
-					<h5 class="white">Username</h5>
+				<div className="white field">
+					<h5 className="white">Username</h5>
 					<input type='text' name='username' onChange={this.handleChange}/>
 				</div>
-				<div class="white field">
-					<h5 class="white">Password</h5>
+				<div className="white field">
+					<h5 className="white">Password</h5>
 					<input type='password' name='password' onChange={this.handleChange}/>
 				</div>
-				<div class="white field">
-					<h5 class="white">Location</h5>
+				<div className="white field">
+					<h5 className="white">Location</h5>
 					<input type='text' name='location' onChange={this.handleChange}/>
 				</div>
 			
@@ -85,8 +85,8 @@ export default Register;
 
 // <div>
 // <h3>Register</h3>
-// 	<form onSubmit={this.handleSubmit} class="ui form">
-// 		<div class="two fields">
+// 	<form onSubmit={this.handleSubmit} className="ui form">
+// 		<div className="two fields">
 // 			<div class="field">
 // 				<label>Username</label>
 // 				<input type='text' name='username' onChange={this.handleChange}/>

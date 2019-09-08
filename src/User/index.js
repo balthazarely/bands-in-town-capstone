@@ -7,10 +7,10 @@ const User = (props) => {
         // console.log(props.favArtists, " <-- adding artist to the favoriteList")
     return(
         <div key={i}>
-            <Button basic color="orange" onClick={props.clickArtistOnList}>{fav}</Button>
-            <Button.Group basic size='small'>
-                <Button  basic color="orange" onClick={props.removeArtistFromList.bind(null, fav)} icon='delete' />
-            </Button.Group>
+                <Button basic color="orange" onClick={props.clickArtistOnList}>{fav}</Button>
+                <Button.Group basic size='small'>
+                    <Button  basic color="orange" onClick={props.removeArtistFromList.bind(null, fav)} icon='delete' />
+                </Button.Group>
         </div> 
         )
     })
@@ -18,13 +18,13 @@ const User = (props) => {
 
     return(
         <div> 
-            <Divider className="white" inverted horizontal><h3> PROFILE </h3></Divider>
-
-          <p className="white">Username: {props.name}</p>
+            <Divider className="white" inverted horizontal><h3> FAVORITES </h3></Divider>
+            <p className="white">Location: {props.location}</p>
+          {/* <p className="white">Username: {props.name}</p>
           <p className="white">Location: {props.location}</p>
       
         
-          <p className="white">Favorite Artists:</p>
+          <p className="white">Favorite Artists:</p> */}
           {artistList}
         </div>
     )
