@@ -9,7 +9,7 @@ const ArtistBio = (props) => {
     return(
         <div>
         <Divider className="white" inverted horizontal><h3>BIO </h3></Divider>
-        <p className='white'>{props.bio}</p>
+        <p className='white word-wrap'>{props.bio}</p>
         </div>
     )
 }

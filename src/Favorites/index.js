@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Divider} from 'semantic-ui-react'
 
 
-const User = (props) => {
+const Favorites = (props) => {
     const artistList = props.favArtists.map((fav, i) => {
         // console.log(props.favArtists, " <-- adding artist to the favoriteList")
     return(
@@ -18,8 +18,8 @@ const User = (props) => {
 
     return(
         <div> 
-            <Divider className="white" inverted horizontal><h3> FAVORITES </h3></Divider>
-            <p className="white">Location: {props.location}</p>
+            <Divider className="white" inverted horizontal><h3> My Artists </h3></Divider>
+            {/* <p className="white">Location: {props.location}</p> */}
           {/* <p className="white">Username: {props.name}</p>
           <p className="white">Location: {props.location}</p>
       
@@ -32,4 +32,4 @@ const User = (props) => {
 
 
 
-export default User;
+export default Favorites;

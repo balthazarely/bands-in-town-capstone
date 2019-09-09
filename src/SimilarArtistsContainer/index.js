@@ -15,7 +15,7 @@ const SimilarArtistsContainer = (props) => {
 
         return (
             
-                <Button key={i} basic inverted color="orange" className="ui color1 button" value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
+                <Button key={i} basic inverted color="orange" className="ui color1 button btn" value={artist.name} onClick={props.clickedSimilarArtist}>{artist.name}</Button>
           
         )  
     })

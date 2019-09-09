@@ -4,15 +4,18 @@ import Register from './Register';
 import Login from './Login';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
+import LogoHeader from './Header';
 import Logout from './Logout';
+// import LogoutPlaceholder from './LogoutPlaceholder';
 
 
 
 function App() {
   return (
     <div className="App">
-       <Logout />
-
+    <Logout />
+    <LogoHeader />
+  
       
       <main>
       <div className="ui menu inverted segment">

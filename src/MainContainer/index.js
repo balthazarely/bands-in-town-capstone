@@ -2,20 +2,18 @@ import React, { Component} from 'react';
 import ConcertContainer from '../ConcertContainer';
 import SimilarArtistsContainer from '../SimilarArtistsContainer';
 import 'semantic-ui-css/semantic.min.css';
-import { Popup, Grid, Image, Segment, Button, Icon, Input, GridColumn } from 'semantic-ui-react'
+import { Grid, Image, Segment, Button, Icon, Input, } from 'semantic-ui-react'
 import LogoHeader from '../Header';
 import TopSongs from '../TopSongs';
 import EventContainer from '../EventContainer';
-import User from '../User';
+import Favorites from '../Favorites';
 import SavedEvents from '../SavedEvents';
 import Welcome from '../Welcome';
 import LoaderIcon from '../LoaderIcon';
+import LoaderIconPlaceholder from '../LoaderIconPlaceholder';
 import ArtistBio from '../ArtistBio';
-import { async } from 'q';
-import { parse } from '@babel/parser';
-import VideoContainer from '../VideoContainer';
-
-
+import UserInfo from '../UserInfo';
+import Logout from '../Logout'
 
 
 class MainContainer extends Component {
@@ -35,12 +33,15 @@ class MainContainer extends Component {
             savedEvents: [],
             favArtists: [],
             //this is the user state stuff
-            name: "joe shmmo",
+            name: '',
             location: "",
             //utility
             loading: true,
             savedEventsReady: false,
-            ready: false
+            ready: false,
+            fetchCallfired: false
+           
+          
         }
         this.handleTermChange = this.handleTermChange.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -57,6 +58,7 @@ class MainContainer extends Component {
             e.preventDefault();}
         this.setState({
           ready: false,
+        fetchCallfired: true,
           simularAtist: this.state.searchTerm
         })
         this.componentDidMount();
@@ -81,7 +83,7 @@ class MainContainer extends Component {
         // console.log(recentAdd)
         this.setState({
             savedEvents: [... this.state.savedEvents, recentAdd],
-            // savedEvents: [... this.state.savedEvents, singleConcert],
+            savedEvents: [... this.state.savedEvents, singleConcert],
         }, function() {
             this.setState({
                 savedEventsReady: true
@@ -111,57 +113,60 @@ class MainContainer extends Component {
                 },
             })
             const parsedResponse = await newFavArtist.json();
-            console.log(parsedResponse)
+            // console.log(parsedResponse)
         } catch (err){
 
         }
     }
 
 
+    // The delete route
+    removeArtistFromList = async (fav, e) => {
+    try {
+        console.log(fav)
+        // i know that this fetch request is trying to bring up the item that i am trying to delete from the DB. but how to i ensure that i am selecting the correct one?
+        const deleteArtist = await fetch(`http://localhost:9000/auth/home/${fav}`,  {
+            method: "PUT",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }) 
+        
+        const parsedResponse = await deleteArtist.json();
+        console.log("delete ", fav)
+        this.setState({
+            favArtists: this.state.favArtists.filter((artist) => artist !== fav)
+        })
+    } catch(err) {
+        console.log(err, ' error')
+      
+        }
+    }
+    
+
+
+    //this is the route that gives us the userinfomatino so that i can add it to the state.
+    // the problem seems to be that the data is coming in as NULL in the terminal
     GetUserInfomation = async (user) => {
         try {
-            const userResponse = await fetch('http://localhost:9000/auth/home');
-    
-            // if(response.status !== 200){
-            //     // For http errors, Fetch doesn't reject the promise on 404 or 500
-            //     // throw Error(crimes.statusText);
-            //     }
-    
+            const userResponse = await fetch('http://localhost:9000/auth/home', {
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
             const userInfo = await userResponse.json();
-            console.log(userResponse)
+            console.log(userInfo)
+            this.setState({
+                name: userInfo.value.username
+            })
         //     this.setState({movies: moviesParsed.data})
         } catch(err){
             console.log(err)
             return err
         }
     }
-
-
-
-
-
-
-    removeArtistFromList = async (fav) => {
-        try {
-            const deleteArtist = await fetch('http://localhost:9000/auth/home' + fav, {
-                method: 'DELETE'
-            })
-            const parsedResponse = await deleteArtist.json();
-            console.log("delete ", fav)
-
-            this.setState({
-                favArtists: this.state.favArtists.filter((artist) => artist !== fav)
-            })
-        } catch(err) {
-            console.log(err, ' error')
-          }
-        }
-       
-    
-
-
-
-
 
 
     removeShowFromList = (event) => {
@@ -185,7 +190,6 @@ class MainContainer extends Component {
     }
 
 
-
     // Get the API data
     componentDidMount = async () => {
         this.GetUserInfomation();
@@ -200,10 +204,7 @@ class MainContainer extends Component {
             const response3 = await fetch(` http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${this.state.simularAtist}&api_key=d6f78535b00f29193d52a517f0d13935&format=json`);
             const json3 = await response3.json();
             const response4 = await fetch(` http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${this.state.simularAtist}&api_key=d6f78535b00f29193d52a517f0d13935&format=json`);
-            const json4 = await response4.json();
-        //fetch artist ID
-            const response5 = await fetch(`https://api.songkick.com/api/3.0/search/artists.json?apikey=viaZLZfjblo2eWh5&query=${this.state.searchTerm}`);
-            const json5 = await response5.json();
+            const json4 = await response4.json();           
         //fetch based on area
             const response6 = await fetch(`https://api.songkick.com/api/3.0/metro_areas/${this.state.locationID}/calendar.json?apikey=viaZLZfjblo2eWh5`);
             const json6 = await response6.json();
@@ -211,107 +212,110 @@ class MainContainer extends Component {
             const response7 = await fetch(`http://ws.audioscrobbler.com//2.0/?method=artist.getinfo&artist=${this.state.searchTerm}&api_key=d6f78535b00f29193d52a517f0d13935&format=json`);
             const json7 = await response7.json();
             const bioinfo = json7.artist.bio.summary
-        // console.log(bioinfo)
+    
 
         this.setState({
             artistData: json,
             topSongs: json4,
             concertData: [...json2],
             similarArtistsData: [json3],
-            fethchedArtistId: [json5],
             locationData: [json6],
             artitsBio: bioinfo,
-            loading: false
+            loading: false,
+            fetchCallfired: false
         });
     }
     
     render() {
          return (
              <div className="bg">
-                 <div className="content-holder">
-                <LogoHeader />
-                 <Grid stackable columns={3}>
-                    <Grid.Column width={16}>
-                        <div>
-                            <div className="search-form">
-                                <form onSubmit={this.handleSubmit}>
-                                    <Input size='small' icon='search' type="text" 
-                                        name="searchTerm" 
-                                        id="IDK" focus
-                                        placeholder="Search Artist..." 
-                                        value={this.state.searchTerm} 
-                                        onChange={this.handleTermChange}/>
-                                    <Button className="mainButton" color="orange" >
-                                        Submit
-                                    </Button>
-                                </form>
-                            </div>
-                        </div>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <VideoContainer />
-                    </Grid.Column>
-                </Grid>
-
-        
-
-
-
-
-
-            
-                <Grid stackable columns={3}>
-                    <Grid.Column width={4} className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
-                        <div>
-                            <Image className="artist-image" src={this.state.artistData.image_url}/>
-                            <h1 className="artist-name-display">{this.state.artistData.name}</h1>
-                            <Button inverted className="plus-icon" color="orange" icon value={this.state.artistData.name} onClick={this.addArtistToList}>
-                                <Icon name='plus'/>
-                            </Button>
-                        
-                            
-                        </div>
-                        <div className="gray-card">
-                            {this.state.loading ? "Similar Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
-                        </div>
-                        <div className="gray-card">
-                            {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}
-                        </div>
-                        <div className="gray-card">
-                            {this.state.loading ? "Top Songs Loading..." : <ArtistBio bio={this.state.artitsBio} />}
-                     
-                        </div>
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                        
-                        <Segment>
-                            {this.state.loading ? <Welcome /> : <ConcertContainer concert={this.state.concertData} addShowToList={this.addShowToList}/>} 
-                            
-                        </Segment>
                 
-                    </Grid.Column>
-                    <Grid.Column className={this.state.loading ? 'opacityON' : 'opacityOFF'} width={4}>
-                        <div className="gray-card-nomargintop">
+                <div className="content-holder fade-in">
+                {/* <Logout /> */}
+                    {/* <LogoHeader /> */}
+                    <Grid stackable columns={3}>
+                        <Grid.Column width={4}>
+                        </Grid.Column>
+                        <Grid.Column width={8}>
+                            {this.state.fetchCallfired  ? <LoaderIcon /> : <LoaderIconPlaceholder />}
+                                <div>
+                                    <div className="search-form">
+                                        <form onSubmit={this.handleSubmit}>
+                                            <Input action={{
+                                                    color: 'orange',
+                                                    icon: 'search',
+                                                    }}  
+                                                size='small' type="text" 
+                                                name="searchTerm" 
+                                                placeholder="Search Artist..." 
+                                                value={this.state.searchTerm} 
+                                                onChange={this.handleTermChange}/>
+                                        </form>
+                                    </div>
+                                </div>
+                            {this.state.loading ? <Segment><Welcome/></Segment> : null}
+                        </Grid.Column>
+                        <Grid.Column width={4}>
+                        </Grid.Column>
+                    </Grid>
+
+
+                    <div className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
+                    <Grid stackable columns={3}>
+                        <Grid.Column width={4}>
+                            <div>
+                                <Image className="artist-image" src={this.state.artistData.image_url}/>
+                                <h1 className="artist-name-display">{this.state.artistData.name}</h1>
+                                
+                                <Button inverted className="plus-icon" color="orange" icon value={this.state.artistData.name} onClick={this.addArtistToList}>
+                                    <Icon name='plus'/>
+                                </Button>
+
+                            </div>
+                            <div className="gray-card">
+                                {this.state.loading ? "Similar Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
+                            </div>
+                            <div className="gray-card">
+                                {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}
+                            </div>
+                            <div className="gray-card">
+                                {this.state.loading ? "Top Songs Loading..." : <ArtistBio bio={this.state.artitsBio} />}
+                            </div>
+                        </Grid.Column>
+
+
+                        <Grid.Column width={8}>
+                            {this.state.concertData.length == 0 ? <h2 className="no-upcoming-show"> No Upcoming Events</h2> : <Segment>
+                                <ConcertContainer concert={this.state.concertData} addShowToList={this.addShowToList}/>
+                            </Segment>}
+                        </Grid.Column>
+
+
+
+                        <Grid.Column className={this.state.loading ? 'opacityON' : 'opacityOFF'} width={4}>
+                            <div className="gray-card-nomargintop">
+                                {this.state.loading ? "User Loading..." : <UserInfo name={this.state.name}/>}
+                            </div>
                             
-                            <User removeArtistFromList={this.removeArtistFromList}
-                            clickArtistOnList={this.clickArtistOnList} 
-                            name={this.state.name} 
-                            favArtists={this.state.favArtists}
-                            location={this.state.location}/>
-                        </div>
-                        
-                            {this.state.savedEvents.length == 0 ? null : <Segment>
-                            <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />  </Segment>}
-                     
-                        <div className="gray-card">
-                            
-                            {this.state.loading ? "Nearby Events Loading..." : <EventContainer event={this.state.locationData} />}
-                        </div>
-                    </Grid.Column>
-                </Grid>
+                            <div className="gray-card">
+                                <Favorites removeArtistFromList={this.removeArtistFromList}
+                                clickArtistOnList={this.clickArtistOnList} 
+                                name={this.state.name} 
+                                favArtists={this.state.favArtists}
+                                location={this.state.location}/>
+                            </div>
+                            <div >
+                                {this.state.savedEvents.length == 0 ? null : <Segment>
+                                <SavedEvents savedEvents={this.state.savedEvents} removeShowFromList={this.removeShowFromList} />  </Segment>}
+                            </div>
+                            <div className="gray-card">
+                                {this.state.loading ? "Nearby Events Loading..." : <EventContainer event={this.state.locationData} />}
+                            </div>
+                        </Grid.Column>
+                    </Grid>
+                </div>
             </div>
         </div>
-         
         )
     }
 }
@@ -319,4 +323,18 @@ class MainContainer extends Component {
 export default MainContainer;
 
 
-               
+// <div className="search-form">
+// <form onSubmit={this.handleSubmit}>
+//     <Input size='small' icon='search' type="text" 
+//         name="searchTerm" 
+//         id="IDK" focus
+//         placeholder="Search Artist..." 
+//         value={this.state.searchTerm} 
+//         onChange={this.handleTermChange}/>
+//     <Button className="mainButton" color="orange" >
+//         Submit
+//     </Button> 
+// </form>
+// </div>
+
+

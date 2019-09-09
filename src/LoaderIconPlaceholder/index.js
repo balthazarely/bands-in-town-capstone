@@ -8,8 +8,10 @@ const LoadingIcon = () => {
    
     
         return(
+           
+           
+            <Loader className="opacityON" size='medium' active inverted inline='centered' color="white" content='Finding Artist'/>
 
-            <Loader size='medium' active inverted inline='centered' color="white" content='Finding Artist'/>
         )
 }
  

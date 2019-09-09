@@ -3,11 +3,11 @@ import { Header } from 'semantic-ui-react'
 
 
 const LogoHeader = () => (
-  <Header className="header" as='h2'>
+  <Header className="header " as='h2'>
    
-    <div className="header-text">
+    <div className="header-text" >
         <div>
-          <img className="logoPlacer"  src="Logo.png" alt="alt"/>
+          <img className="logoPlacer" src="Logo.png" alt="alt"/>
       </div>      
     </div>
     

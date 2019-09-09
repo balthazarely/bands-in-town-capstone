@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react';
 import LogoHeader from '../Header'
+import LogoutPlaceholder from '../LogoutPlaceholder';
 
 
 class Login extends Component {
@@ -39,7 +40,8 @@ class Login extends Component {
 	render() {
 		return (
 			<div>
-				<LogoHeader />
+				{/* <LogoutPlaceholder /> */}
+				{/* <LogoHeader /> */}
 				<div className="login-box">
 					<form onSubmit={this.handleSubmit} className="ui form">
 							<div className="white field">
