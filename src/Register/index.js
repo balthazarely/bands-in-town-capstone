@@ -45,11 +45,11 @@ class Register extends Component {
 		
 
 	<div>
-	<LogoHeader />
+	
 
 	<div className="login-box">
 		<form onSubmit={this.handleSubmit} className="ui form">
-		
+		<h1 className="white"> Register </h1>
 				<div className="white field">
 					<h5 className="white">Username</h5>
 					<input type='text' name='username' onChange={this.handleChange}/>

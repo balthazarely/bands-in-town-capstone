@@ -28,7 +28,7 @@ const EventContainer = (props) => {
 
     return(
         <div>
-            <Divider className="white" inverted horizontal><h3> Events Nearby </h3></Divider>
+            
             
             <Card.Group >
                 {events}

@@ -18,7 +18,7 @@ const Favorites = (props) => {
 
     return(
         <div> 
-            <Divider className="white" inverted horizontal><h3> My Artists </h3></Divider>
+            <Divider className="white" inverted horizontal><h4> My Artists </h4></Divider>
             {/* <p className="white">Location: {props.location}</p> */}
           {/* <p className="white">Username: {props.name}</p>
           <p className="white">Location: {props.location}</p>
