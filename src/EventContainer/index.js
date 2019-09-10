@@ -4,7 +4,7 @@ import { Divider, Button, Card, Input } from 'semantic-ui-react'
 
 
 const EventContainer = (props) => {
-    console.log(props.event[0].resultsPage.results.event, " < props in eventContainer")
+    // console.log(props.event[0].resultsPage.results.event, " < props in eventContainer")
     
 
         const events = props.event[0].resultsPage.results.event.slice(0, 20).map((event, i) => {

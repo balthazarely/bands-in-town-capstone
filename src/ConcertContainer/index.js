@@ -11,7 +11,7 @@ const style = {
 
 const ConcertContainer = (props) => {
     const concertList = props.concert.map((singleConcert, i) => {
-    console.log(singleConcert, " < concert info in ConcertContainer") 
+    // console.log(singleConcert, " < concert info in ConcertContainer") 
     // console.log(props.concert[0].lineup)
       
     
@@ -41,7 +41,6 @@ const ConcertContainer = (props) => {
                             {/* <p className="push-left"><Moment format="MMMM Do [,] YYYY">{singleConcert.datetime}</Moment></p> */}
                             <h4 className="push-left lineup2">{singleConcert.venue.city}, {singleConcert.venue.country}</h4>
                             <div className="push-left">
-
 
                             {/* {typeof singleConcert.offers[0].url == "undefined" ? null : <h4>hi</h4> } */}
 

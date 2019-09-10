@@ -39,7 +39,7 @@ const TopSongs = (props) => {
     
         return(
             <div>
-                 <Divider className="white" inverted horizontal><h3> Top Songs </h3></Divider>
+                 <Divider className="white" inverted horizontal><h4> Top Songs </h4></Divider>
                 <ol>{songs}</ol>
             </div>
         )

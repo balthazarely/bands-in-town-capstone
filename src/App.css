@@ -11,13 +11,19 @@
   height: 85px;
   width: auto;
 }
+.logoPlacer2 {
+  margin-top: 30px;
+  margin-bottom: 40px;
+  height: 40px;
+  width: auto;
+}
 
 .content-holder{
   margin: -70px 80px 0px 80px;
 }
 
 body {
-  background-image: url("/background.png");
+  background-image: url("/background2.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -157,6 +163,14 @@ h3 {
   font-family: 'Source Sans Pro', sans-serif;
   text-transform: uppercase;
   font-weight: 1000;
+ 
+}
+
+.instruction-text {
+  font-family: 'Source Sans Pro', sans-serif;
+  display: inline-block;
+  text-transform: lowercase;
+  font-weight: 500;
 }
 
 .saved-event-title {
@@ -271,6 +285,10 @@ ul {
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: .7s;
+}
+
+.padding-please{
+  margin: 25px;
 }
 
 @keyframes fadeInOpacity {

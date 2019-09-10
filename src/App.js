@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { createRef } from 'react'
 import MainContainer from './MainContainer';
 import Register from './Register';
 import Login from './Login';
 import './App.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import LogoHeader from './Header';
 import Logout from './Logout';
+
 // import LogoutPlaceholder from './LogoutPlaceholder';
 
 
 
 function App() {
+
+
   return (
     <div className="App">
     <Logout />
+
     <LogoHeader />
+   
+
   
       
       <main>

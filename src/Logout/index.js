@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react';
+import Instructions from '../Instructions';
 
 
 
@@ -8,8 +9,11 @@ const Logout = () => {
     
         return(
             <div className="push-right">
-                <h1></h1>
+              <div className="padding-please">
+              <Instructions />
                 <Button basic inverted color="orange" className="logout-btn" href="/">Logout</Button>
+              </div>
+                         
             </div>
         )
 }

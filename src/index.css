@@ -16,7 +16,7 @@ body, html {
   height: 100%;
 }
 .bg {
-  background-image: url("/background.png");
+  background-image: url("/background.png2");
   background-repeat: no-repeat;
 
   background-attachment: fixed;

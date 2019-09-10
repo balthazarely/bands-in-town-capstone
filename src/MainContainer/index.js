@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import ConcertContainer from '../ConcertContainer';
 import SimilarArtistsContainer from '../SimilarArtistsContainer';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Image, Segment, Button, Icon, Input, Divider, Modal, Header } from 'semantic-ui-react'
+import { Grid, Reveal, Image, Transition, Segment, Button, Icon, Input, Divider } from 'semantic-ui-react'
 import LogoHeader from '../Header';
 import TopSongs from '../TopSongs';
 import EventContainer from '../EventContainer';
@@ -37,7 +37,7 @@ class MainContainer extends Component {
         
             //this is the user state stuff
             name: '',
-            location: "san francisco",
+            location: "Denver",
 
             //utility
             loading: true,
@@ -91,10 +91,10 @@ class MainContainer extends Component {
 
     addShowToList = (singleConcert, e) => {
         // e.preventDefault();
-        const recentAdd = singleConcert;
+        // const recentAdd = singleConcert;
         // console.log(recentAdd)
         this.setState({
-            savedEvents: [... this.state.savedEvents, recentAdd],
+            // savedEvents: [... this.state.savedEvents, recentAdd],
             savedEvents: [... this.state.savedEvents, singleConcert],
         }, function() {
             this.setState({
@@ -107,6 +107,12 @@ class MainContainer extends Component {
     // this should also be triggering adding the artist to the db.
     addArtistToList = async (e) => {
         e.preventDefault();
+        
+        // for(let i = 0; i < this.state.favArtists.length; i++) {
+        //     if(e.currentTarget.value == this.state.favArtists[i]) {
+        //         alert("error, artist already exisits!")
+        //     }
+        // }
         this.setState({
             favArtists: [... this.state.favArtists, e.currentTarget.value]
             },function(){
@@ -157,11 +163,6 @@ class MainContainer extends Component {
     }
 
     
-    
-
-
-    //this is the route that gives us the userinfomatino so that i can add it to the state.
-    // the problem seems to be that the data is coming in as NULL in the terminal
     GetUserInfomation = async (user) => {
         try {
             const userResponse = await fetch('http://localhost:9000/auth/home', {
@@ -171,16 +172,6 @@ class MainContainer extends Component {
                 },
             })
             const userInfo = await userResponse.json();
-
-
-            // let alreadyLikedArtists = userInfo.data
-            // let newList = alreadyLikedArtists.map(function(item) {
-            //     return item['newFav']
-            // });
-
-            // console.log(newList, "< new List")
-
-
 
             console.log(userInfo.data)
             this.setState({
@@ -202,6 +193,7 @@ class MainContainer extends Component {
         })
         console.log("delete ", event)
     }
+    
 
     clickArtistOnList = (e) => {
         console.log("you clicked ", [e.target.innerHTML])
@@ -215,7 +207,6 @@ class MainContainer extends Component {
              this.handleSubmit();
         }) 
     }
-
 
     // // api call to change location
     locationAPICall = () => {
@@ -231,7 +222,6 @@ class MainContainer extends Component {
             })
         }
     
-
 
     // Get the API data
     componentDidMount = async () => {
@@ -267,14 +257,16 @@ class MainContainer extends Component {
     }
 
 
-    changeLocation = (e) => {
-
-    }
 
    
     render() {
+
+   
+
+        
          return (
              <div className="bg">
+                 
                 
                 <div className="content-holder fade-in">
                 {/* <Logout /> */}
@@ -298,6 +290,8 @@ class MainContainer extends Component {
                                                 onChange={this.handleTermChange}/>
                                         </form>
                                     </div>
+                                   
+                                   
                                 </div>
                             {this.state.loading ? <Segment><Welcome/></Segment> : null}
                         </Grid.Column>
@@ -305,14 +299,25 @@ class MainContainer extends Component {
                         </Grid.Column>
                     </Grid>
 
-   
 
+       
 
                     <div className={this.state.loading ? 'opacityON' : 'opacityOFF'}>
                     <Grid stackable columns={3}>
                         <Grid.Column width={4}>
                             <div>
-                                <Image className="artist-image" src={this.state.artistData.image_url}/>
+
+                                <Reveal animated='move top'>
+                                    <Reveal.Content visible>
+                                    <Image className="artist-image" src={this.state.artistData.image_url}/>
+                                    </Reveal.Content>
+                                    <Reveal.Content hidden>
+                                    {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}                                    </Reveal.Content>
+                                </Reveal>
+
+
+
+                                {/* <Image className="artist-image" src={this.state.artistData.image_url}/> */}
                                 <h1 className="artist-name-display">{this.state.artistData.name}</h1>
                                 
                                 <Button inverted className="plus-icon" color="orange" icon value={this.state.artistData.name} onClick={this.addArtistToList}>
@@ -323,9 +328,9 @@ class MainContainer extends Component {
                             <div className="gray-card">
                                 {this.state.loading ? "Similar Artist Loading..." : <SimilarArtistsContainer similarArtists={this.state.similarArtistsData} clickedSimilarArtist={this.clickedSimilarArtist} />}
                             </div>
-                            <div className="gray-card">
+                            {/* <div className="gray-card">
                                 {this.state.loading ? "Top Songs Loading..." : <TopSongs topSongs={this.state.topSongs} />}
-                            </div>
+                            </div> */}
                             <div className="gray-card">
                                 {this.state.loading ? "Top Songs Loading..." : <ArtistBio bio={this.state.artitsBio} />}
                             </div>
@@ -370,7 +375,7 @@ class MainContainer extends Component {
                                                     }}  
                                                 size='mini' type="text" 
                                                 name="location" 
-                                                placeholder="Change location" 
+                                                placeholder={this.state.location} 
                                                 // value={this.state.searchTerm} 
                                                 onChange={this.handleTermChange}/>
                                         </form>
@@ -380,7 +385,10 @@ class MainContainer extends Component {
                         </Grid.Column>
                     </Grid>
                 </div>
+          
             </div>
+
+         
         </div>
         )
     }

@@ -10,7 +10,7 @@ const SimilarArtistsContainer = (props) => {
     // console.log(props.similarArtists, "< SimularArtists inside similarArtistsContainer")
     // console.log(props.similarArtists[0].similarartists.artist[0])
     // const artist = props.similarArtists[0].similarartists.artist[0].name
-    const artist = props.similarArtists[0].similarartists.artist.slice(0, 8).map((artist, i) => {
+    const artist = props.similarArtists[0].similarartists.artist.slice(0, 12).map((artist, i) => {
         // console.log(props.similarArtists[0].similarartists.artist)
 
         return (
