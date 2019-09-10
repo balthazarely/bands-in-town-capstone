@@ -29,7 +29,7 @@ class MainContainer extends Component {
             fethchedArtistId: '',
             similarArtistsData: [],
             savedEvents: [],
-            favArtists: [],
+            // favArtists: [],
 
             // location API data
             locationID: '',     
@@ -135,9 +135,9 @@ class MainContainer extends Component {
     // The delete route
     removeArtistFromList = async (fav, e) => {
     try {
-        console.log(fav)
+        // console.log(fav)
         // i know that this fetch request is trying to bring up the item that i am trying to delete from the DB. but how to i ensure that i am selecting the correct one?
-        const deleteArtist = await fetch(`http://localhost:9000/auth/home/${fav}`,  {
+        const deleteArtist = await fetch(`http://localhost:9000/auth/home/${fav.newFav}`,  {
             method: "PUT",
             credentials: 'include',
             headers: {
@@ -155,6 +155,8 @@ class MainContainer extends Component {
       
         }
     }
+
+    
     
 
 
@@ -169,9 +171,22 @@ class MainContainer extends Component {
                 },
             })
             const userInfo = await userResponse.json();
-            console.log(userInfo.data.username)
+
+
+            // let alreadyLikedArtists = userInfo.data
+            // let newList = alreadyLikedArtists.map(function(item) {
+            //     return item['newFav']
+            // });
+
+            // console.log(newList, "< new List")
+
+
+
+            console.log(userInfo.data)
             this.setState({
-                name: userInfo.data.username
+                name: userInfo.data.username,
+                favArtists: userInfo.data.favArtists
+            //Line 188 was added and might have caused the error
             })
         //     this.setState({movies: moviesParsed.data})
         } catch(err){
@@ -327,14 +342,20 @@ class MainContainer extends Component {
 
                         <Grid.Column className={this.state.loading ? 'opacityON' : 'opacityOFF'} width={4}>
                             <div className="gray-card-nomargintop">
-                                {this.state.loading ? "User Loading..." : <UserInfo name={this.state.name}/>}
+                                {this.state.loading ? "User Loading..." : <UserInfo name={this.state.name} location={this.state.location}/>}
                                 <Divider/>
                                 {/* <p className="white">Location: {this.state.location}</p> */}
+                                
+                                {this.state.loading ? null :
                                 <Favorites removeArtistFromList={this.removeArtistFromList}
                                 clickArtistOnList={this.clickArtistOnList} 
                                 name={this.state.name} 
                                 favArtists={this.state.favArtists}
-                                location={this.state.location}/>
+                                location={this.state.location}/> }
+
+
+
+
                             </div>
                             <div >
                                 {this.state.savedEvents.length == 0 ? null : <Segment>
